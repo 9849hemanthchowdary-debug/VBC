@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   BrowserRouter,
+  HashRouter,
   Routes,
   Route,
   Navigate
@@ -69,11 +70,12 @@ function PrivateWebsite() {
 }
 
 function App() {
-  return <BrowserRouter><Routes>
+  const Router = import.meta.env.VITE_DEPLOY_TARGET === "github-pages" ? HashRouter : BrowserRouter;
+  return <Router><Routes>
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
     <Route path="/*" element={<ProtectedRoute><PrivateWebsite /></ProtectedRoute>} />
-  </Routes></BrowserRouter>;
+  </Routes></Router>;
 }
 
 export default App;
